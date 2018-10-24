@@ -1,0 +1,8 @@
+<?php
+
+/**
+ * @file
+ * OpenEuropa ePoetry module.
+ */
+
+declare(strict_types = 1);

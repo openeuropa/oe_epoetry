@@ -1,0 +1,9 @@
+name: OpenEuropa ePoetry
+description: Translations against ePoetry service.
+package: OpenEuropa
+type: module
+core: 8.x
+dependencies:
+  - oe_authentication
+  - tmgmt
+  - tmgmt_content
