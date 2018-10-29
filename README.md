@@ -1,4 +1,6 @@
-# OpenEuropa Drupal module template
+# OpenEuropa ePoetry
+
+This Drupal module allows to use TMGMT with DGT translation tool ePoetry.
 
 ## Development setup
 
