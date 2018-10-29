@@ -1,6 +1,6 @@
 # OpenEuropa ePoetry
 
-This Drupal module allows to use TMGMT with DGT translation tool ePoetry.
+The OpenEuropa ePoetry module allows to use [TMGMT](https://www.drupal.org/project/tmgmt) with  the DGT translation service ePoetry.
 
 ## Development setup
 
