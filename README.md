@@ -1,6 +1,6 @@
 # OpenEuropa ePoetry
 
-The OpenEuropa ePoetry module allows to use [TMGMT](https://www.drupal.org/project/tmgmt) with  the DGT translation service ePoetry.
+The OpenEuropa ePoetry module allows the use of the DGT translation service ePoetry with [TMGMT](https://www.drupal.org/project/tmgmt).
 
 ## Development setup
 
