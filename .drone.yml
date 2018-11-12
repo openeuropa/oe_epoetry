@@ -34,6 +34,8 @@ pipeline:
   composer-install:
     group: prepare
     image: fpfis/httpd-php-ci:7.1
+    volumes:
+    - /cache:/cache
     commands:
       - composer install --ansi --no-suggest --no-progress
 
@@ -71,12 +73,7 @@ pipeline:
     group: test
     image: fpfis/httpd-php-ci:7.1
     commands:
-      # Reset permission since installation runs as root. @todo Fix this on drone.
-      - ./vendor/bin/drush -y config-set system.performance css.preprocess 0
-      - ./vendor/bin/drush -y config-set system.performance js.preprocess 0
-      - chmod -R 777 ./build
-      # Run behat tests.
-      - ./vendor/bin/behat
+      - ./vendor/bin/behat --strict
 
   debug:
     image: fpfis/httpd-php-dev:7.1

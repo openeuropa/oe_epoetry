@@ -16,6 +16,13 @@ You can build the test site by running the following steps.
 
 ## Installation
 
+The certificate used on `secureweb` container is profited by: 
+```
+https://authentication:7002/cas/selfCertWeb/
+```
+
+You can build the test site by running the following steps.
+
 The recommended way of installing the OpenEuropa ePoetry module is via [Composer][1].
 
 ```bash

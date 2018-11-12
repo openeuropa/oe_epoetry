@@ -25,7 +25,7 @@ services:
     image: fpfis/httpd-php-dev:7.1
     working_dir: /var/www/html
     ports:
-      - 8080:8080
+    - 8080:8080
     volumes:
       - .:/var/www/html/ # Non Mac users.
       # - ~/.cache/composer:/root/.composer/cache # use a local cache.
@@ -42,8 +42,8 @@ services:
     image: percona/percona-server:5.6
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
-    # ports:
-    #   - 3306:3306
+    ports:
+    - 3306:3306
 
   # Spawn a Selenium server which also includes a VNC server on localhost:5900 (the password is "secret")
   selenium:
