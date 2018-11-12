@@ -4,6 +4,11 @@ The OpenEuropa ePoetry module allows the use of the DGT translation service ePoe
 
 ## Development setup
 
+The certificate used on `secureweb` container is profited by: 
+```
+https://authentication:7002/cas/selfCertWeb/
+```
+
 You can build the test site by running the following steps.
 
 * Install all the composer dependencies:

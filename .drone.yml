@@ -13,7 +13,14 @@ services:
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes
 
 pipeline:
-  composer-install-lowest:
+  composer-install-highest:
+    group: prepare
+    image: fpfis/httpd-php-dev:7.1
+    volumes:
+    - /cache:/cache
+    commands:
+    - composer install --ansi --no-suggest --no-progress
+  composer-update-lowest:
     group: prepare
     image: fpfis/httpd-php-dev:7.1
     volumes:
@@ -21,45 +28,34 @@ pipeline:
     commands:
       # @todo remove "composer install" step once the following issue is fixed.
       # @link https://webgate.ec.europa.eu/CITnet/jira/browse/OPENEUROPA-1234
-      - composer install --ansi --no-suggest --no-progress
       - composer update --prefer-lowest --prefer-stable --ansi --no-suggest --no-progress
     when:
       matrix:
         COMPOSER_BOUNDARY: lowest
-
-  composer-install-highest:
-    group: prepare
-    image: fpfis/httpd-php-dev:7.1
-    volumes:
-      - /cache:/cache
-    commands:
-      - composer install --ansi --no-suggest --no-progress
-    when:
-      matrix:
-        COMPOSER_BOUNDARY: highest
-
   site-install:
     image: fpfis/httpd-php-dev:7.1
     commands:
       - ./vendor/bin/run drupal:site-install
-
   grumphp:
     group: test
     image: fpfis/httpd-php-dev:7.1
     commands:
       - ./vendor/bin/grumphp run
-
   phpunit:
     group: test
     image: fpfis/httpd-php-dev:7.1
     commands:
       - ./vendor/bin/phpunit
-
   behat:
     group: test
     image: fpfis/httpd-php-dev:7.1
     commands:
-      - ./vendor/bin/behat
+    # Reset permission since installation runs as root. @todo Fix this on drone.
+    - ./vendor/bin/drush -y config-set system.performance css.preprocess 0
+    - ./vendor/bin/drush -y config-set system.performance js.preprocess 0
+    - chmod -R 777 ./build
+    # Run behat tests.
+    - ./vendor/bin/behat
 
 matrix:
   COMPOSER_BOUNDARY:

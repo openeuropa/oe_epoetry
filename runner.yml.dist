@@ -26,6 +26,19 @@ commands:
     - { task: "symlink", from: "../../..", to: "${drupal.root}/modules/custom/oe_epoetry" }
     - { task: "run", command: "drupal:drush-setup" }
     - { task: "run", command: "drupal:settings-setup" }
+    - task: "append"
+      file: "build/sites/default/settings.override.php"
+      text: |
+        $config['cas.settings']['server']['protocol'] = 'https';
+        $config['cas.settings']['server']['hostname'] = 'authentication';
+        $config['cas.settings']['server']['port'] = '7002';
+        $config['cas.settings']['server']['path'] = '/cas';
+        $config['cas.settings']['server']['version'] = '3.0';
+        $config['cas.settings']['proxy']['initialize'] = TRUE;
+        // SSL Configuration to not verify CAS server. DO NOT USE IN PRODUCTION!
+        $config['cas.settings']['server']['verify'] = '2';
+        $config['cas.settings']['forced_login']['enabled'] = FALSE;
+        $config['cas.settings']['advanced']['debug']['log'] = TRUE;
     - { task: "run", command: "setup:phpunit" }
     - { task: "run", command: "setup:behat" }
   setup:phpunit:
