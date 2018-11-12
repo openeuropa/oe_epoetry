@@ -17,7 +17,7 @@ pipeline:
     group: prepare
     image: fpfis/httpd-php-ci:7.1
     volumes:
-      - /cache:/cache
+    - /cache:/cache
     commands:
       - composer install --ansi --no-suggest --no-progress
 
