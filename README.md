@@ -40,15 +40,6 @@ composer install
 * Customize build settings by copying `runner.yml.dist` to `runner.yml` and
 changing relevant values, like your database credentials.
 
-* Setup test site by running:
-
-```bash
-./vendor/bin/run drupal:site-setup
-```
-
-This will symlink the theme in the proper directory within the test site and
-perform token substitution in test configuration files such as `behat.yml.dist`.
-
 * Install test site by running:
 
 ```bash
