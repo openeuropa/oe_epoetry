@@ -3,7 +3,6 @@ workspace:
   path: oe_epoetry
 
 services:
-  web:
     image: fpfis/httpd-php-ci:7.1
     environment:
       - DOCUMENT_ROOT=/test/oe_epoetry
@@ -13,6 +12,27 @@ services:
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes
 
 pipeline:
+  secureweb:
+    group: conf
+    image: aheimsbakk/https-proxy:4
+    detach: true
+    volumes:
+      - ./tests/fixtures/certs/secureweb:/etc/ssl/private
+    command:
+      - export SERVER_NAME=secureweb
+      - export SERVER_ADMIN=webmaster@mydomain.com
+      - export PORT_REDIRECT=8080
+      - export SSL_CERT_FILE=/etc/ssl/private/MyKeystore.crt
+      - export SSL_PRIVKEY_FILE=/etc/ssl/private/MyKeystore.key
+      - export SSL_CHAIN_FILE=/etc/ssl/private/MyKeystore.p12
+
+  authentication:
+    group: conf
+    image: registry.fpfis.tech.ec.europa.eu/ecas-mock-server:4.6.0
+    detach: true
+    entrypoint: [ /bin/bash ]
+    command: [ -c, "cp /test/oe_authentication/tests/fixtures/mock-server-config/*.xml  /data/ecas-mock-server-shared; echo 'eCAS Mockup Server shared configuration is done.'; /u01/oracle/user_projects/domains/base_domain/startWebLogic.sh"]
+
   composer-install:
     group: prepare
     image: fpfis/httpd-php-ci:7.1
@@ -27,8 +47,6 @@ pipeline:
     volumes:
       - /cache:/cache
     commands:
-      # @todo remove "composer install" step once the following issue is fixed.
-      # @link https://webgate.ec.europa.eu/CITnet/jira/browse/OPENEUROPA-1234
       - composer update --prefer-lowest --prefer-stable --ansi --no-suggest --no-progress
     when:
       matrix:
