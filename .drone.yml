@@ -35,7 +35,7 @@ pipeline:
     group: prepare
     image: fpfis/httpd-php-ci:7.1
     volumes:
-    - /cache:/cache
+      - /cache:/cache
     commands:
       - composer install --ansi --no-suggest --no-progress
 
@@ -74,6 +74,13 @@ pipeline:
     image: fpfis/httpd-php-ci:7.1
     commands:
       - ./vendor/bin/behat --strict
+
+  debug:
+    image: fpfis/httpd-php-dev:7.1
+    commands:
+      - ./vendor/bin/drush ws --count 500
+    when:
+      status: failure
 
   debug:
     image: fpfis/httpd-php-dev:7.1
