@@ -1,6 +1,8 @@
 version: '2'
 services:
   secureweb:
+    # For local access, run this command in the terminal
+    # echo "127.0.1.1 secureweb" >> /etc/hosts
     image: aheimsbakk/https-proxy:4
     ports:
     - 80:80
@@ -51,7 +53,7 @@ services:
     - 4444
   authentication:
     # For local access, run this command in the terminal
-    # echo "127.0.1.1       authentication" >> /etc/hosts
+    # echo "127.0.1.1 authentication" >> /etc/hosts
     image: registry.fpfis.tech.ec.europa.eu/ecas-mock-server:4.6.0
     volumes:
     - ./tests/fixtures/ecas-mockup-config:/data/ecas-mock-server-shared
@@ -61,7 +63,6 @@ services:
     - 7003:7003
 
 #### Mac users: uncomment the "volumes" key to enable the NFS file sharing. You can find more information about Docker for Mac here: https://github.com/openeuropa/openeuropa/blob/master/docs/starting/tooling.md#using-docker-on-macos
-
 #volumes:
 #  nfsmount:
 #    driver: local
@@ -69,5 +70,4 @@ services:
 #      type: nfs
 #      o: addr=host.docker.internal,rw,nolock,hard,nointr,nfsvers=3
 #      device: ":${PWD}/"
-
 #### End Mac users.
