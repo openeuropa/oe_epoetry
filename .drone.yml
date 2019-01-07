@@ -21,20 +21,8 @@ pipeline:
     group: conf
     image: aheimsbakk/https-proxy:4
     detach: true
-<<<<<<< HEAD
     entrypoint: [ /bin/bash ]
     command: [ -c, "export SERVER_NAME=secureweb; export SERVER_ADMIN=webmaster@mydomain.com; export PORT_REDIRECT=8080; export SSL_CERT_FILE=/test/oe_authentication/tests/fixtures/MyKeystore.crt; export SSL_PRIVKEY_FILE=/test/oe_authentication/tests/fixtures/MyKeystore.key; export SSL_CHAIN_FILE=/test/oe_authentication/tests/fixtures/MyKeystore.p12; echo 'SecureWeb is up.'; echo $SSL_CHAIN_FILE;"]
-=======
-    volumes:
-      - ./tests/fixtures/certs/secureweb:/etc/ssl/private
-    command:
-      - export SERVER_NAME=secureweb
-      - export SERVER_ADMIN=webmaster@mydomain.com
-      - export PORT_REDIRECT=8080
-      - export SSL_CERT_FILE=/etc/ssl/private/MyKeystore.crt
-      - export SSL_PRIVKEY_FILE=/etc/ssl/private/MyKeystore.key
-      - export SSL_CHAIN_FILE=/etc/ssl/private/MyKeystore.p12
->>>>>>> OPENEUROPA-1299: Update CI file.
 
   authentication:
     group: conf
@@ -84,13 +72,6 @@ pipeline:
     image: fpfis/httpd-php-ci:7.1
     commands:
       - ./vendor/bin/behat --strict
-
-  debug:
-    image: fpfis/httpd-php-dev:7.1
-    commands:
-      - ./vendor/bin/drush ws --count 500
-    when:
-      status: failure
 
   debug:
     image: fpfis/httpd-php-dev:7.1
