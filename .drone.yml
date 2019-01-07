@@ -14,7 +14,7 @@ services:
   epoetry:
     image: registry.fpfis.tech.ec.europa.eu/epoetry-mock:0.0.1
   orcldb:
-    image: store/oracle/database-enterprise:12.2.0.1
+    image: registry.fpfis.tech.ec.europa.eu/oracle/database-enterprise:12.2.0.1
 
 pipeline:
   secureweb:
