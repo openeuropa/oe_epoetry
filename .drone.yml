@@ -11,6 +11,10 @@ services:
     image: percona/percona-server:5.6
     environment:
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+  epoetry:
+    image: registry.fpfis.tech.ec.europa.eu/epoetry-mock:0.0.1
+  orcldb:
+    image: store/oracle/database-enterprise:12.2.0.1
 
 pipeline:
   secureweb:
@@ -33,16 +37,6 @@ pipeline:
     detach: true
     entrypoint: [ /bin/bash ]
     command: [ -c, "cp /test/oe_authentication/tests/fixtures/mock-server-config/*.xml  /data/ecas-mock-server-shared; echo 'eCAS Mockup Server shared configuration is done.'; /u01/oracle/user_projects/domains/base_domain/startWebLogic.sh"]
-
-  epoetry:
-    image: registry.fpfis.tech.ec.europa.eu/epoetry-mock:0.0.1
-    detach: true
-    entrypoint: [ /bin/bash ]
-    command: [ -c, "/u01/oracle/user_projects/domains/base_domain/startSample.sh"]
-
-  orcldb:
-    image: store/oracle/database-enterprise:12.2.0.1
-    detach: true
 
   composer-install:
     group: prepare
