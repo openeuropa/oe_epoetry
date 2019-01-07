@@ -13,22 +13,15 @@ services:
   epoetry:
     image: registry.fpfis.tech.ec.europa.eu/epoetry-mock:0.0.1
   orcldb:
-    image: store/oracle/database-enterprise:12.2.0.1
+    image: registry.fpfis.tech.ec.europa.eu/oracle/database-enterprise:12.2.0.1
 
 pipeline:
   secureweb:
     group: conf
     image: aheimsbakk/https-proxy:4
     detach: true
-    volumes:
-      - ./tests/fixtures/certs/secureweb:/etc/ssl/private
-    command:
-      - export SERVER_NAME=secureweb
-      - export SERVER_ADMIN=webmaster@mydomain.com
-      - export PORT_REDIRECT=8080
-      - export SSL_CERT_FILE=/etc/ssl/private/MyKeystore.crt
-      - export SSL_PRIVKEY_FILE=/etc/ssl/private/MyKeystore.key
-      - export SSL_CHAIN_FILE=/etc/ssl/private/MyKeystore.p12
+    entrypoint: [ /bin/bash ]
+    command: [ -c, "export SERVER_NAME=secureweb; export SERVER_ADMIN=webmaster@mydomain.com; export PORT_REDIRECT=8080; export SSL_CERT_FILE=/test/oe_authentication/tests/fixtures/MyKeystore.crt; export SSL_PRIVKEY_FILE=/test/oe_authentication/tests/fixtures/MyKeystore.key; export SSL_CHAIN_FILE=/test/oe_authentication/tests/fixtures/MyKeystore.p12; echo 'SecureWeb is up.'; echo $SSL_CHAIN_FILE;"]
 
   authentication:
     group: conf
