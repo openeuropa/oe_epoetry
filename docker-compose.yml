@@ -1,4 +1,5 @@
-version: '2'
+version: '3.2'
+
 services:
   secureweb:
     # For local access, run this command in the terminal
@@ -41,8 +42,8 @@ services:
     image: percona/percona-server:5.6
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
-    ports:
-      - 3306:3306
+    # ports:
+    #   - 3306:3306
 
   # Spawn a Selenium server which also includes a VNC server on localhost:5900 (the password is "secret")
   selenium:
@@ -62,11 +63,29 @@ services:
     volumes:
       - ./tests/fixtures/ecas-mockup-config:/data/ecas-mock-server-shared
     ports:
-      - 7001:7001
       - 7002:7002
-      - 7003:7003
+
+  epoetry:
+    image: registry.fpfis.tech.ec.europa.eu/epoetry-mock:0.0.1
+    ports:
+      - 7001:7001
+    depends_on:
+      - orcldb
+    restart: always
+
+  orcldb:
+    image: store/oracle/database-enterprise:12.2.0.1
+    ports:
+      - 1521:1521
+      - 5500:5500
+    volumes:
+      - db-oracle:/ORCL
+
+volumes:
+  db-oracle:
 
 #### Mac users: uncomment the "volumes" key to enable the NFS file sharing. You can find more information about Docker for Mac here: https://github.com/openeuropa/openeuropa/blob/master/docs/starting/tooling.md#using-docker-on-macos
+
 #volumes:
 #  nfsmount:
 #    driver: local
@@ -74,4 +93,5 @@ services:
 #      type: nfs
 #      o: addr=host.docker.internal,rw,nolock,hard,nointr,nfsvers=3
 #      device: ":${PWD}/"
+
 #### End Mac users.
