@@ -13,12 +13,17 @@ use OpenEuropa\EPoetry\Type\LinguisticRequestIn;
 use OpenEuropa\EPoetry\Type\RequestGeneralInfoIn;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class TestController extends ControllerBase
-{
+/**
+ * Test epoetry.
+ */
+class TestController extends ControllerBase {
   protected $epoetry;
 
   protected $httpClient;
 
+  /**
+   * TestController construct method.
+   */
   public function __construct(EPoetryClientFactory $epoetry, Client $httpClient) {
     $this->epoetry = $epoetry;
     $this->httpClient = $httpClient;
@@ -34,6 +39,9 @@ class TestController extends ControllerBase
     );
   }
 
+  /**
+   * Run test.
+   */
   public function test() {
 
     // Generate response.
@@ -43,7 +51,7 @@ class TestController extends ControllerBase
 
     $clientFactory = $this->epoetry;
     $client = $clientFactory->getClient();
-    
+
     // Generate request.
     $generalInfo = new RequestGeneralInfoIn();
     $generalInfo->setTitle('Test');
@@ -57,8 +65,9 @@ class TestController extends ControllerBase
     $request = $client->debugLastSoapRequest()['request'];
 
     $build = [
-      '#markup' => var_export($request['headers'], true),
+      '#markup' => var_export($request['headers'], TRUE),
     ];
     return $build;
   }
+
 }
