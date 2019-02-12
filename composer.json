@@ -9,13 +9,14 @@
         "php": "^7.1",
         "drupal/core": "^8.7",
         "drupal/tmgmt": "^1.8",
-        "openeuropa/epoetry-client": "dev-master"
+        "openeuropa/epoetry-client": "dev-master",
+        "openeuropa/oe_authentication": "^1.0.0-alpha3"
     },
     "require-dev": {
         "composer/installers": "~1.5",
         "cweagans/composer-patches": "~1.6.5",
         "drupal-composer/drupal-scaffold": "~2.2",
-        "drupal/config_devel": "~1.2",
+        "drupal/config_devel": "^1.2",
         "drupal/console": "~1.0",
         "drupal/drupal-extension": "~4.0",
         "drush/drush": "~9.0",
@@ -31,12 +32,16 @@
         "post-install-cmd": "./vendor/bin/run drupal:site-setup",
         "post-update-cmd": "./vendor/bin/run drupal:site-setup"
     },
-    "repositories": {
-        "drupal": {
+    "repositories": [
+        {
             "type": "composer",
             "url": "https://packages.drupal.org/8"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/openeuropa/epoetry-client"
         }
-    },
+    ],
     "autoload": {
         "psr-4": {
             "Drupal\\oe_epoetry\\": "./src/"
