@@ -1,0 +1,7 @@
+oe_epoetry.settings:
+  path: '/oe_epoetry/test'
+  defaults:
+    _controller: '\Drupal\oe_epoetry\Controller\TestController::test'
+    _title: 'Test Client'
+  requirements:
+    _permission: 'access content'
