@@ -11,6 +11,9 @@ The OpenEuropa ePoetry module allows the use of the [DGT translation](https://ec
 - [Contributing](#contributing)
 - [Versioning](#versioning)
 
+You can build the test site by running the following steps.
+
+
 ## Installation
 
 The recommended way of installing the OpenEuropa ePoetry module is via [Composer][1].
@@ -47,6 +50,11 @@ changing relevant values, like your database credentials.
 ```
 
 Your test site will be available at `./build`.
+
+The certificate used on `secureweb` container is profited by: 
+```
+https://authentication:7002/cas/selfCertWeb/
+```
 
 ### Using Docker Compose
 
@@ -89,8 +97,8 @@ docker-compose up -d
 Then:
 
 ```bash
-docker-compose exec web composer install
-docker-compose exec web ./vendor/bin/run drupal:site-install
+docker-compose exec html composer install
+docker-compose exec html ./vendor/bin/run drupal:site-install
 ```
 
 Using default configuration, the development site files should be available in the `build` directory and the development site
@@ -101,19 +109,19 @@ should be available at: [http://127.0.0.1:8080/build](http://127.0.0.1:8080/buil
 To run the grumphp checks:
 
 ```bash
-docker-compose exec web ./vendor/bin/grumphp run
+docker-compose exec html ./vendor/bin/grumphp run
 ```
 
 To run the phpunit tests:
 
 ```bash
-docker-compose exec web ./vendor/bin/phpunit
+docker-compose exec html ./vendor/bin/phpunit
 ```
 
 To run the behat tests:
 
 ```bash
-docker-compose exec web ./vendor/bin/behat
+docker-compose exec html ./vendor/bin/behat
 ```
 
 ## Contributing

@@ -3,7 +3,7 @@ workspace:
   path: oe_epoetry
 
 services:
-  web:
+  html:
     image: fpfis/httpd-php-dev:7.1
     environment:
       - DOCUMENT_ROOT=/test/oe_epoetry
@@ -11,55 +11,75 @@ services:
     image: percona/percona-server:5.6
     environment:
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+  epoetry:
+    image: registry.fpfis.tech.ec.europa.eu/epoetry-mock:0.0.1
+  orcldb:
+    image: registry.fpfis.tech.ec.europa.eu/oracle/database-enterprise:12.2.0.1
 
 pipeline:
-  composer-install-lowest:
+  secureweb:
+    group: conf
+    image: aheimsbakk/https-proxy:4
+    detach: true
+    entrypoint: [ /bin/bash ]
+    command: [ -c, "export SERVER_NAME=secureweb; export SERVER_ADMIN=webmaster@mydomain.com; export PORT_REDIRECT=8080; export SSL_CERT_FILE=/test/oe_authentication/tests/fixtures/MyKeystore.crt; export SSL_PRIVKEY_FILE=/test/oe_authentication/tests/fixtures/MyKeystore.key; export SSL_CHAIN_FILE=/test/oe_authentication/tests/fixtures/MyKeystore.p12; echo 'SecureWeb is up.'; echo $SSL_CHAIN_FILE;"]
+
+  authentication:
+    group: conf
+    image: registry.fpfis.tech.ec.europa.eu/ecas-mock-server:4.6.0
+    detach: true
+    entrypoint: [ /bin/bash ]
+    command: [ -c, "cp /test/oe_authentication/tests/fixtures/mock-server-config/*.xml  /data/ecas-mock-server-shared; echo 'eCAS Mockup Server shared configuration is done.'; /u01/oracle/user_projects/domains/base_domain/startWebLogic.sh"]
+
+  composer-install:
     group: prepare
     image: fpfis/httpd-php-dev:7.1
-    volumes:
-      - /cache:/cache
     commands:
-      # @todo remove "composer install" step once the following issue is fixed.
-      # @link https://webgate.ec.europa.eu/CITnet/jira/browse/OPENEUROPA-1234
       - composer install --ansi --no-suggest --no-progress
+
+  composer-update-lowest:
+    group: prepare-update
+    image: fpfis/httpd-php-dev:7.1
+    commands:
       - composer update --prefer-lowest --prefer-stable --ansi --no-suggest --no-progress
     when:
       matrix:
         COMPOSER_BOUNDARY: lowest
-
-  composer-install-highest:
-    group: prepare
-    image: fpfis/httpd-php-dev:7.1
-    volumes:
-      - /cache:/cache
-    commands:
-      - composer install --ansi --no-suggest --no-progress
-    when:
-      matrix:
-        COMPOSER_BOUNDARY: highest
 
   site-install:
     image: fpfis/httpd-php-dev:7.1
     commands:
       - ./vendor/bin/run drupal:site-install
 
-  grumphp:
+  test-grumphp:
     group: test
     image: fpfis/httpd-php-dev:7.1
     commands:
       - ./vendor/bin/grumphp run
 
-  phpunit:
+  test-phpunit:
     group: test
     image: fpfis/httpd-php-dev:7.1
     commands:
       - ./vendor/bin/phpunit
 
-  behat:
+  test-behat:
     group: test
     image: fpfis/httpd-php-dev:7.1
     commands:
-      - ./vendor/bin/behat --strict
+      # Reset permission since installation runs as root. @todo Fix this on drone.
+      - ./vendor/bin/drush -y config-set system.performance css.preprocess 0
+      - ./vendor/bin/drush -y config-set system.performance js.preprocess 0
+      - chmod -R 777 ./build
+      # Run behat tests.
+      - ./vendor/bin/behat
+
+  debug:
+    image: fpfis/httpd-php-dev:7.1
+    commands:
+      - ./vendor/bin/drush ws --count 500
+    when:
+      status: failure
 
 matrix:
   COMPOSER_BOUNDARY:

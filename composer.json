@@ -10,19 +10,20 @@
         "drupal/core": "^8.6",
         "drupal/tmgmt": "^1.6",
         "openeuropa/epoetry-client": "dev-OPENEUROPA-1552",
-        "openeuropa/oe_authentication": "^1.0.0-alpha3"
+        "openeuropa/oe_authentication": "dev-master"
     },
     "require-dev": {
         "composer/installers": "~1.5",
         "drupal-composer/drupal-scaffold": "~2.2",
-        "drupal/config_devel": "^1.2",
+        "drupal/config_devel": "~1.2",
         "drupal/console": "~1.0",
         "drupal/drupal-extension": "~4.0.0@beta",
         "drush/drush": "~9.0@stable",
         "openeuropa/code-review": "~1.0@beta",
         "openeuropa/drupal-core-require-dev": "^8.6",
         "openeuropa/task-runner": "~1.0-beta4",
-        "phpunit/phpunit": "~6.0"
+        "phpunit/phpunit": "~6.0",
+        "php-http/mock-client": "^1.2"
     },
     "scripts": {
         "drupal-scaffold": "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
