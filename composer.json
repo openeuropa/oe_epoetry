@@ -9,7 +9,7 @@
         "php": "^7.1",
         "drupal/core": "^8.6",
         "drupal/tmgmt": "^1.6",
-        "openeuropa/epoetry-client": "dev-OPENEUROPA-1552",
+        "openeuropa/epoetry-client": "dev-master",
         "openeuropa/oe_authentication": "dev-master"
     },
     "require-dev": {
