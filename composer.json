@@ -6,9 +6,10 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
+        "php": "^7.1",
+        "drupal/core": "^8.6",
         "drupal/tmgmt": "^1.6",
-        "openeuropa/drupal-core-require": "^8.7",
-        "php": "^7.1"
+        "openeuropa/epoetry-client": "dev-master"
     },
     "require-dev": {
         "composer/installers": "~1.5",
