@@ -5,12 +5,11 @@ declare(strict_types = 1);
 namespace Drupal\oe_epoetry\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
-use GuzzleHttp\Psr7\Response;
-use Http\Mock\Client;
-use OpenEuropa\EPoetry\EPoetryClientFactory;
-use OpenEuropa\EPoetry\Type\CreateRequests;
-use OpenEuropa\EPoetry\Type\LinguisticRequestIn;
-use OpenEuropa\EPoetry\Type\RequestGeneralInfoIn;
+use Http\Adapter\Guzzle6\Client;
+use OpenEuropa\EPoetry\ClientFactory;
+use OpenEuropa\EPoetry\Request\Type\CreateRequests;
+use OpenEuropa\EPoetry\Request\Type\LinguisticRequestIn;
+use OpenEuropa\EPoetry\Request\Type\RequestGeneralInfoIn;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -24,7 +23,7 @@ class TestController extends ControllerBase {
   /**
    * TestController construct method.
    */
-  public function __construct(EPoetryClientFactory $epoetry, Client $httpClient) {
+  public function __construct(ClientFactory $epoetry, Client $httpClient) {
     $this->epoetry = $epoetry;
     $this->httpClient = $httpClient;
   }
@@ -35,7 +34,7 @@ class TestController extends ControllerBase {
   public static function create(ContainerInterface $container) {
     return new static(
       $container->get('oe_epoetry.epoetry_client'),
-      $container->get('oe_epoetry.http_mock')
+      $container->get('oe_epoetry.http_client_adapter')
     );
   }
 
@@ -44,13 +43,8 @@ class TestController extends ControllerBase {
    */
   public function test() {
 
-    // Generate response.
-    $content = file_get_contents(__DIR__ . '/../../vendor/openeuropa/epoetry-client/tests/fixtures/create-requests-response.xml');
-    $response = new Response(200, [], $content);
-    $this->httpClient->addResponse($response);
-
     $clientFactory = $this->epoetry;
-    $client = $clientFactory->getClient();
+    $client = $clientFactory->getRequestClient();
 
     // Generate request.
     $generalInfo = new RequestGeneralInfoIn();
@@ -58,7 +52,7 @@ class TestController extends ControllerBase {
     $linguisticRequestIn = new LinguisticRequestIn();
     $linguisticRequestIn->setGeneralInfo($generalInfo);
     $createRequests = new CreateRequests();
-    $createRequests->setLinguisticRequest($linguisticRequestIn);
+    $createRequests->setLinguisticRequest([$linguisticRequestIn]);
 
     $client->createRequests($createRequests);
 
