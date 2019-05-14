@@ -7,22 +7,24 @@
     "prefer-stable": true,
     "require": {
         "php": "^7.1",
-        "drupal/core": "^8.6",
+        "drupal/core": "^8.7",
         "drupal/tmgmt": "^1.6",
-        "openeuropa/epoetry-client": "dev-master",
-        "openeuropa/oe_authentication": "dev-master"
+        "openeuropa/epoetry-client": "dev-OPENEUROPA-1708",
+        "openeuropa/oe_authentication": "^1.0@alpha"
     },
     "require-dev": {
         "composer/installers": "~1.5",
         "drupal-composer/drupal-scaffold": "~2.2",
         "drupal/config_devel": "~1.2",
-        "drupal/drupal-extension": "~4.0.0@beta",
-        "drush/drush": "~9.0@stable",
-        "openeuropa/code-review": "~1.0@beta",
-        "openeuropa/drupal-core-require-dev": "^8.6",
-        "openeuropa/task-runner": "~1.0-beta4",
-        "phpunit/phpunit": "~6.0",
-        "php-http/mock-client": "~1.0"
+        "drupal/console": "~1.0",
+        "drupal/drupal-extension": "~4.0",
+        "drush/drush": "~9.0",
+        "nikic/php-parser": "~3.0",
+        "openeuropa/behat-transformation-context" : "~0.1",
+        "openeuropa/code-review": "~1.0.0-alpha4",
+        "openeuropa/drupal-core-require-dev": "^8.7",
+        "openeuropa/task-runner": "~1.0-beta3",
+        "phpunit/phpunit": "~6.0"
     },
     "scripts": {
         "drupal-scaffold": "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
@@ -33,10 +35,6 @@
         {
             "type": "composer",
             "url": "https://packages.drupal.org/8"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/openeuropa/epoetry-client"
         }
     ],
     "autoload": {
