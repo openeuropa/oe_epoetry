@@ -9,8 +9,7 @@
         "php": "^7.1",
         "drupal/core": "^8.7",
         "drupal/tmgmt": "^1.8",
-        "openeuropa/epoetry-client": "dev-master",
-        "openeuropa/oe_authentication": "^1.0.0-beta1"
+        "openeuropa/epoetry-client": "dev-master"
     },
     "require-dev": {
         "composer/installers": "~1.5",
@@ -21,10 +20,11 @@
         "drupal/drupal-extension": "~4.0.0@beta",
         "drush/drush": "~9.0@stable",
         "nikic/php-parser": "~3.0",
-        "openeuropa/behat-transformation-context" : "^0.1",
+
+        "openeuropa/behat-transformation-context" : "~0.1",
         "openeuropa/code-review": "~1.0.0-beta3",
         "openeuropa/drupal-core-require-dev": "^8.7",
-        "openeuropa/oe_authentication": "^1.0@beta",
+        "openeuropa/oe_authentication": "~1.0.0-beta1",
         "openeuropa/task-runner": "~1.0.0-beta6",
         "phpunit/phpunit": "~6.0",
         "php-http/mock-client": "~1.0"
