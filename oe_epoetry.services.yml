@@ -1,16 +1,17 @@
 services:
-  oe_epoetry.http_mock:
-    class: \Http\Mock\Client
+  oe_epoetry.http_client_adapter:
+    class: \Http\Adapter\Guzzle6\Client
+    arguments: ['@http_client']
   oe_epoetry.epoetry_cas_proxy_ticket_session:
     class: OpenEuropa\EPoetry\Middleware\CasProxyTicketSessionMiddleware
     arguments: [
       '@session'
     ]
   oe_epoetry.epoetry_client:
-    class: \OpenEuropa\EPoetry\EPoetryClientFactory
+    class: \OpenEuropa\EPoetry\ClientFactory
     arguments: [
-      '../vendor/openeuropa/epoetry-client/resources/dgtServiceWSDL.xml',
-      '@oe_epoetry.http_mock'
+      'http://epoetry:7001/epoetry/webservices/dgtService',
+      '@oe_epoetry.http_client_adapter'
     ]
     calls:
       - method: 'addMiddleware'

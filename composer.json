@@ -10,7 +10,10 @@
         "drupal/core": "^8.7",
         "drupal/tmgmt": "^1.6",
         "openeuropa/epoetry-client": "dev-OPENEUROPA-1708",
-        "openeuropa/oe_authentication": "^1.0@alpha"
+        "openeuropa/oe_authentication": "^1.0@alpha",
+        "php-http/guzzle6-adapter": "^2.0",
+        "php-http/client-common": "^2.0",
+        "php-http/discovery": "^1.6"
     },
     "require-dev": {
         "composer/installers": "~1.5",
