@@ -2,11 +2,13 @@ services:
   oe_epoetry.http_client_adapter:
     class: \Http\Adapter\Guzzle6\Client
     arguments: ['@http_client']
+  oe_proxy_ticket_helper:
+    class: \Drupal\oe_epoetry\Helper\ProxyTicketHelper
   oe_epoetry.epoetry_cas_proxy_ticket_session:
-    class: OpenEuropa\EPoetry\Middleware\CasProxyTicketSessionMiddleware
-    arguments: [
-      '@session'
-    ]
+    class: \OpenEuropa\EPoetry\Middleware\CasProxyTicketSessionMiddleware
+    arguments:
+      - '@oe_proxy_ticket_helper'
+      - 'getProxyTicket'
   oe_epoetry.epoetry_client:
     class: \OpenEuropa\EPoetry\ClientFactory
     arguments: [
