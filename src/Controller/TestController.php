@@ -55,7 +55,6 @@ class TestController extends ControllerBase {
     $createRequests->setLinguisticRequest([$linguisticRequestIn]);
 
     $client->createRequests($createRequests);
-
     $request = $client->debugLastSoapRequest()['request'];
 
     $build = [
