@@ -3,12 +3,14 @@ services:
     class: \Http\Adapter\Guzzle6\Client
     arguments: ['@http_client']
   oe_proxy_ticket_helper:
-    class: \Drupal\oe_epoetry\Helper\ProxyTicketHelper
-  oe_epoetry.epoetry_cas_proxy_ticket_session:
-    class: \OpenEuropa\EPoetry\Middleware\CasProxyTicketSessionMiddleware
+    class: \Drupal\oe_epoetry\Helper\ProxyTicket
+    arguments:
+      - '@http_client'
+      - '@session'
+  oe_epoetry.middleware_cas_proxy_ticket:
+    class: \OpenEuropa\EPoetry\Middleware\CasProxyTicketMiddleware
     arguments:
       - '@oe_proxy_ticket_helper'
-      - 'getProxyTicket'
   oe_epoetry.epoetry_client:
     class: \OpenEuropa\EPoetry\ClientFactory
     arguments: [
@@ -18,4 +20,4 @@ services:
     calls:
       - method: 'addMiddleware'
         arguments:
-          - '@oe_epoetry.epoetry_cas_proxy_ticket_session'
+          - '@oe_epoetry.middleware_cas_proxy_ticket'
