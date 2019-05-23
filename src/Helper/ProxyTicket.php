@@ -17,7 +17,7 @@ use Psr\Log\LogLevel;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
- * Class ProxyTicket
+ * Class ProxyTicket.
  *
  * @package Drupal\oe_epoetry\Helper
  */
@@ -65,7 +65,7 @@ class ProxyTicket implements CasProxyTicketInterface {
    *
    * @todo Move this setting into module customizable settings.
    */
-  private $target_service = 'http://localhost:7001/epoetry/webservices/dgtService';
+  private $targetService = 'http://localhost:7001/epoetry/webservices/dgtService';
 
   /**
    * ProxyTicket constructor.
@@ -90,15 +90,20 @@ class ProxyTicket implements CasProxyTicketInterface {
   }
 
   /**
-   * @inheritDoc
+   * Get Proxy Ticket from CAS service.
+   *
+   * @return string
+   *   The Proxy Ticket.
+   *
+   * @throws CasProxyException
+   *   Thrown if there was a problem communicating with the CAS server.
    */
   public function getProxyTicket(): string {
-    return $this->proxyAuthenticate($this->target_service);
+    return $this->proxyAuthenticate($this->targetService);
   }
 
   /**
-   * Proxy authenticates to a target service and get
-   * a Proxy Ticket.
+   * Proxy authenticates to a target service and get Proxy Ticket.
    *
    * @param string $target_service
    *   The service to be proxied.
@@ -116,13 +121,13 @@ class ProxyTicket implements CasProxyTicketInterface {
     $cas_proxy_helper = $this->session->get('cas_proxy_helper');
     // Check to see if we have proxied this application already.
     if (isset($cas_proxy_helper[$target_service])) {
-      $cookies = array();
+      $cookies = [];
       foreach ($cas_proxy_helper[$target_service] as $cookie) {
         $cookies[$cookie['Name']] = $cookie['Value'];
       }
       $domain = $cookie['Domain'];
       $jar = CookieJar::fromArray($cookies, $domain);
-      $this->casHelper->log(LogLevel::DEBUG, "%target_service already proxied. Returning information from session.", array('%target_service' => $target_service));
+      $this->casHelper->log(LogLevel::DEBUG, "%target_service already proxied. Returning information from session.", ['%target_service' => $target_service]);
       return $jar;
     }
 
@@ -134,17 +139,17 @@ class ProxyTicket implements CasProxyTicketInterface {
     // Make request to CAS server to retrieve a proxy ticket for this service.
     $cas_url = $this->getServerProxyUrl($target_service);
     try {
-      $this->casHelper->log(LogLevel::DEBUG, "Retrieving proxy ticket from %cas_url", array('%cas_url' => $cas_url));
+      $this->casHelper->log(LogLevel::DEBUG, "Retrieving proxy ticket from %cas_url", ['%cas_url' => $cas_url]);
       $response = $this->httpClient->get($cas_url, [
         'timeout' => $this->settings->get('advanced.connection_timeout'),
-        'verify' => FALSE
+        'verify' => FALSE,
       ]);
     }
     catch (ClientException $e) {
       throw new CasProxyException($e->getMessage());
     }
     $proxy_ticket = $this->parseProxyTicket($response->getBody()->getContents());
-    $this->casHelper->log(LogLevel::DEBUG, "Extracted proxy ticket %ticket", array('%ticket' => $proxy_ticket));
+    $this->casHelper->log(LogLevel::DEBUG, "Extracted proxy ticket %ticket", ['%ticket' => $proxy_ticket]);
 
     return $proxy_ticket;
   }
@@ -162,7 +167,7 @@ class ProxyTicket implements CasProxyTicketInterface {
    */
   private function getServerProxyUrl($target_service) {
     $url = $this->casHelper->getServerBaseUrl() . 'proxy';
-    $params = array();
+    $params = [];
     $params['pgt'] = $this->session->get('cas_pgt');
     $params['targetService'] = $target_service;
     return $url . '?' . UrlHelper::buildQuery($params);
@@ -207,4 +212,5 @@ class ProxyTicket implements CasProxyTicketInterface {
     }
     return $proxy_ticket->item(0)->nodeValue;
   }
+
 }
