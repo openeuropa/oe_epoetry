@@ -4,11 +4,13 @@ services:
   secureweb:
     # For local access, run this command in the terminal
     # echo "127.0.1.1 secureweb" >> /etc/hosts
-    image: aheimsbakk/https-proxy:4
+    image: aheimsbakk/https-proxy:6.1
     ports:
       - 80:80
       - 443:443
     restart: always
+    links:
+      - web:http
     volumes:
       - ./tests/fixtures/certs/secureweb:/etc/ssl/private
     environment:
@@ -19,7 +21,7 @@ services:
       - SSL_PRIVKEY_FILE=/etc/ssl/private/MyKeystore.key
       - SSL_CHAIN_FILE=/etc/ssl/private/MyKeystore.p12
 
-  http:
+  web:
     image: fpfis/httpd-php-dev:7.1
     working_dir: /var/www/html
     ports:
