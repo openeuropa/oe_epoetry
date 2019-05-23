@@ -8,8 +8,6 @@ services:
     ports:
       - 80:80
       - 443:443
-    links:
-      - web:http
     restart: always
     volumes:
       - ./tests/fixtures/certs/secureweb:/etc/ssl/private
@@ -21,7 +19,7 @@ services:
       - SSL_PRIVKEY_FILE=/etc/ssl/private/MyKeystore.key
       - SSL_CHAIN_FILE=/etc/ssl/private/MyKeystore.p12
 
-  web:
+  http:
     image: fpfis/httpd-php-dev:7.1
     working_dir: /var/www/html
     ports:

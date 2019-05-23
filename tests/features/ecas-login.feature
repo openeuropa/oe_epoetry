@@ -17,20 +17,10 @@ Feature: Login through OE Authentication
     And I press the "Login!" button
     # Redirected back to Drupal.
     Then I should see "You have been logged in."
-    And I should see the link "My account"
-    And I should see the link "Log out"
-    And I should not see the link "Log in"
 
     # Redirected back to Drupal.
     When I click "My account"
     Then I should see the heading "chucknorris"
-
-    # Profile contains extra fields.
-    When I click "Edit"
-    Then the "First Name" field should contain "Chuck"
-    And the "Last Name" field should contain "NORRIS"
-    And the "Department" field should contain "DIGIT.A.3.001"
-    And the "Organisation" field should contain "eu.europa.ec"
 
     When I click "Log out"
     # Redirected to the Ecas mockup server.
@@ -40,4 +30,3 @@ Feature: Login through OE Authentication
     And I should not see the link "My account"
     And I should not see the link "Log out"
     And I should see the link "Log in"
-

@@ -3,7 +3,7 @@ workspace:
   path: oe_epoetry
 
 services:
-  html:
+  http:
     image: fpfis/httpd-php-ci:7.1
     environment:
       - DOCUMENT_ROOT=/test/oe_epoetry
@@ -23,14 +23,14 @@ services:
 
 pipeline:
   secureweb:
-    group: conf
+    group: prepare
     image: aheimsbakk/https-proxy:4
     detach: true
     entrypoint: [ /bin/bash ]
     command: [ -c, "export SERVER_NAME=secureweb; export SERVER_ADMIN=webmaster@mydomain.com; export PORT_REDIRECT=8080; export SSL_CERT_FILE=/test/oe_epoetry/tests/fixtures/MyKeystore.crt; export SSL_PRIVKEY_FILE=/test/oe_epoetry/tests/fixtures/MyKeystore.key; export SSL_CHAIN_FILE=/test/oe_epoetry/tests/fixtures/MyKeystore.p12; echo 'SecureWeb is up.'; echo $SSL_CHAIN_FILE;"]
 
   authentication:
-    group: conf
+    group: prepare
     image: registry.fpfis.tech.ec.europa.eu/ecas-mock-server:4.6.0
     detach: true
     entrypoint: [ /bin/bash ]
