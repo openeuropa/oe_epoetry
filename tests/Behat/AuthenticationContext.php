@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace Drupal\Tests\oe_authentication\Behat;
+namespace Drupal\Tests\oe_epoetry\Behat;
 
 use Drupal\DrupalExtension\Context\ConfigContext;
 use Drupal\user\Entity\User;

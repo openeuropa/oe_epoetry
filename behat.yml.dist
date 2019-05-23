@@ -4,10 +4,15 @@ default:
       paths:
         - %paths.base%/tests/features
       contexts:
-        - Drupal\DrupalExtension\Context\MinkContext
+        - Drupal\DrupalExtension\Context\ConfigContext
         - Drupal\DrupalExtension\Context\DrupalContext
-        - Drupal\Tests\oe_authentication\Behat\AuthenticationContext
-        - Drupal\Tests\oe_authentication\Behat\CleanupContext
+        - Drupal\DrupalExtension\Context\MinkContext
+        - Drupal\Tests\oe_epoetry\Behat\AuthenticationContext
+        - Drupal\Tests\oe_epoetry\Behat\CleanupContext
+        - OpenEuropa\Behat\TransformationContext:
+            pages:
+              Authentication configuration: 'admin/config/system/oe_authentication'
+              user registration: '/user/register'
   extensions:
     Drupal\MinkExtension:
       goutte: ~

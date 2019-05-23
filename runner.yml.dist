@@ -11,7 +11,10 @@ drupal:
     user: "root"
     password: ""
   post_install:
+    # Prepare the instance.
+    - "./vendor/bin/drush en toolbar -y"
     - "./vendor/bin/drush en config_devel -y"
+    # Enable the modules.
     - "./vendor/bin/drush en oe_epoetry -y"
     - "./vendor/bin/drush cr"
   settings:
