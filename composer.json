@@ -8,7 +8,7 @@
     "require": {
         "php": "^7.1",
         "drupal/core": "^8.7",
-        "drupal/tmgmt": "^1.6",
+        "drupal/tmgmt": "^1.8",
         "openeuropa/epoetry-client": "dev-OPENEUROPA-1895",
         "openeuropa/oe_authentication": "^1.0@alpha",
         "php-http/guzzle6-adapter": "^2.0",
