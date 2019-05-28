@@ -65,7 +65,7 @@ class ProxyTicket implements CasProxyTicketInterface {
    *
    * @todo Move this setting into module customizable settings.
    */
-  private $targetService = 'http://localhost:7001/epoetry/webservices/dgtService';
+  private $targetService = 'https://epoetry:7004/epoetry/webservices/dgtService';
 
   /**
    * ProxyTicket constructor.
@@ -142,7 +142,7 @@ class ProxyTicket implements CasProxyTicketInterface {
       $this->casHelper->log(LogLevel::DEBUG, "Retrieving proxy ticket from %cas_url", ['%cas_url' => $cas_url]);
       $response = $this->httpClient->get($cas_url, [
         'timeout' => $this->settings->get('advanced.connection_timeout'),
-        'verify' => FALSE,
+        'verify' => TRUE,
       ]);
     }
     catch (ClientException $e) {

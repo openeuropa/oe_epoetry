@@ -66,9 +66,12 @@ services:
       - 7002:7002
 
   epoetry:
-    image: registry.fpfis.tech.ec.europa.eu/epoetry-mock:0.0.1
+    image: registry.fpfis.tech.ec.europa.eu/epoetry-mock:0.0.3
+    environment:
+      - ADMIN_PASSWORD=admin1234
     ports:
       - 7001:7001
+      - 7004:7002
     depends_on:
       - orcldb
     restart: always

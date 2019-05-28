@@ -18,7 +18,7 @@ services:
   oe_epoetry.epoetry_client:
     class: \OpenEuropa\EPoetry\ClientFactory
     arguments: [
-      'http://epoetry:7001/epoetry/webservices/dgtService',
+      'https://epoetry:7004/epoetry/webservices/dgtService',
       '@oe_epoetry.http_client_adapter'
     ]
     calls:
