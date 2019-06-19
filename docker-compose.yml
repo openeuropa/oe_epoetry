@@ -57,7 +57,7 @@ services:
   epoetry:
     # For local access, run this command in the terminal
     # echo "127.0.1.1 epoetry" >> /etc/hosts
-    image: registry.fpfis.tech.ec.europa.eu/epoetry-mock:0.0.2
+    image: registry.fpfis.tech.ec.europa.eu/epoetry-mock:0.0.3
     ports:
       - 7001:7001 # http
       - 7004:7002 # https

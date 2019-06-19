@@ -17,7 +17,7 @@ services:
       - DISPLAY=:99
       - SE_OPTS=-debug
   epoetry:
-    image: registry.fpfis.tech.ec.europa.eu/epoetry-mock:0.0.2
+    image: registry.fpfis.tech.ec.europa.eu/epoetry-mock:0.0.3
   orcldb:
     image: registry.fpfis.tech.ec.europa.eu/oracle/database-enterprise:12.2.0.1
 
