@@ -65,7 +65,7 @@ class ProxyTicket implements CasProxyTicketInterface {
    *
    * @todo Move this setting into module customizable settings.
    */
-  private $targetService = 'http://localhost:7001/epoetry/webservices/dgtService';
+  private $targetService;
 
   /**
    * ProxyTicket constructor.
@@ -80,13 +80,16 @@ class ProxyTicket implements CasProxyTicketInterface {
    *   The session manager.
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
    *   The config factory.
+   * @param string $targetService
+   *   The ePoetry service URL.
    */
-  public function __construct(CasProxyHelper $cas_proxy_helper, Client $http_client, CasHelper $cas_helper, SessionInterface $session, ConfigFactoryInterface $config_factory) {
+  public function __construct(CasProxyHelper $cas_proxy_helper, Client $http_client, CasHelper $cas_helper, SessionInterface $session, ConfigFactoryInterface $config_factory, string $targetService) {
     $this->casProxyHelper = $cas_proxy_helper;
     $this->httpClient = $http_client;
     $this->casHelper = $cas_helper;
     $this->session = $session;
     $this->settings = $config_factory->get('cas.settings');
+    $this->targetService = $targetService;
   }
 
   /**

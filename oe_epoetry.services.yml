@@ -10,7 +10,7 @@ services:
       - '@cas.helper'
       - '@session'
       - '@config.factory'
-      - '@database'
+      - '%oe_epoetry.service.url%'
   oe_epoetry.middleware_cas_proxy_ticket:
     class: \OpenEuropa\EPoetry\Middleware\CasProxyTicketMiddleware
     arguments:
@@ -18,10 +18,15 @@ services:
   oe_epoetry.epoetry_client:
     class: \OpenEuropa\EPoetry\ClientFactory
     arguments: [
-      'http://epoetry:7001/epoetry/webservices/dgtService',
-      '@oe_epoetry.http_client_adapter'
+      '%oe_epoetry.service.url%',
+      '@oe_epoetry.http_client_adapter',
+      '%oe_epoetry.service.options%'
     ]
     calls:
       - method: 'addMiddleware'
         arguments:
           - '@oe_epoetry.middleware_cas_proxy_ticket'
+
+parameters:
+  oe_epoetry.service.url: 'http://epoetry:7001/epoetry/webservices/dgtService'
+  oe_epoetry.service.options: []

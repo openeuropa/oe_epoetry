@@ -28,7 +28,6 @@ services:
       - 8080:8080
     volumes:
       - .:/var/www/html/ # Non Mac users.
-      # - ~/.cache/composer:/root/.composer/cache # use a local cache.
       # - nfsmount:/var/www/html # Mac Users with the nfsmount volume.
     environment:
       # For Xdebug setup:
@@ -66,9 +65,12 @@ services:
       - 7002:7002
 
   epoetry:
+    # For local access, run this command in the terminal
+    # echo "127.0.1.1 epoetry" >> /etc/hosts
     image: registry.fpfis.tech.ec.europa.eu/epoetry-mock:0.0.1
     ports:
-      - 7001:7001
+      - 7001:7001 # http
+      - 7004:7002 # https
     depends_on:
       - orcldb
     restart: always

@@ -10,7 +10,7 @@
         "drupal/core": "^8.7",
         "drupal/tmgmt": "^1.8",
         "openeuropa/epoetry-client": "dev-OPENEUROPA-1895",
-        "openeuropa/oe_authentication": "^1.0@alpha",
+        "openeuropa/oe_authentication": "^1.0.0-beta1",
         "php-http/guzzle6-adapter": "^2.0",
         "php-http/client-common": "^2.0",
         "php-http/discovery": "^1.6"
@@ -27,7 +27,6 @@
         "openeuropa/behat-transformation-context" : "~0.1",
         "openeuropa/code-review": "~1.0.0-beta3",
         "openeuropa/drupal-core-require-dev": "^8.7",
-        "openeuropa/oe_authentication": "~1.0.0-beta1",
         "openeuropa/task-runner": "~1.0.0-beta6",
         "phpunit/phpunit": "~6.0",
         "php-http/mock-client": "~1.0"
