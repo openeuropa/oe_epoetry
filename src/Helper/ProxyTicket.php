@@ -98,7 +98,7 @@ class ProxyTicket implements CasProxyTicketInterface {
    * @return string
    *   The Proxy Ticket.
    *
-   * @throws CasProxyException
+   * @throws \Drupal\cas\Exception\CasProxyException
    *   Thrown if there was a problem communicating with the CAS server.
    */
   public function getProxyTicket(): string {
@@ -114,7 +114,7 @@ class ProxyTicket implements CasProxyTicketInterface {
    * @return string
    *   The Proxy Ticket.
    *
-   * @throws CasProxyException
+   * @throws \Drupal\cas\Exception\CasProxyException
    *   Thrown if there was a problem communicating with the CAS server.
    *
    * @todo Use \Drupal\cas\Service\CasProxyHelper::proxyAuthenticate after
@@ -185,7 +185,7 @@ class ProxyTicket implements CasProxyTicketInterface {
    * @return mixed
    *   A proxy ticket to be used with the target service, FALSE on failure.
    *
-   * @throws CasProxyException
+   * @throws \Drupal\cas\Exception\CasProxyException
    *   Thrown if there was a problem parsing the proxy validation response.
    *
    * @todo Remove together with proxyAuthenticate method.

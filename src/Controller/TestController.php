@@ -16,12 +16,28 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * Test epoetry.
  */
 class TestController extends ControllerBase {
+
+  /**
+   * Factory object to get ePoetry client.
+   *
+   * @var \OpenEuropa\EPoetry\ClientFactory
+   */
   protected $epoetry;
 
+  /**
+   * Http Client.
+   *
+   * @var \Http\Adapter\Guzzle6\Client
+   */
   protected $httpClient;
 
   /**
-   * TestController construct method.
+   * TestController constructor.
+   *
+   * @param \OpenEuropa\EPoetry\ClientFactory $epoetry
+   *   Factory to get ePoetry client.
+   * @param \Http\Adapter\Guzzle6\Client $httpClient
+   *   Http Client.
    */
   public function __construct(ClientFactory $epoetry, Client $httpClient) {
     $this->epoetry = $epoetry;
