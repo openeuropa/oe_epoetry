@@ -1,6 +1,6 @@
 drupal:
   root: "build"
-  base_url: "http://secureweb:443/build"
+  base_url: "http://secureweb/build"
   site:
     name: "OpenEuropa"
     profil: "standard"
