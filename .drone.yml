@@ -27,14 +27,14 @@ pipeline:
     image: aheimsbakk/https-proxy:4
     detach: true
     entrypoint: [ /bin/bash ]
-    command: [ -c, "export SERVER_NAME=secureweb; export SERVER_ADMIN=webmaster@mydomain.com; export PORT_REDIRECT=8080; export SSL_CERT_FILE=/tests/fixtures/certs/secureweb/MyKeystore.crt; export SSL_PRIVKEY_FILE=/tests/fixtures/certs/secureweb/MyKeystore.key; export SSL_CHAIN_FILE=/tests/fixtures/certs/secureweb/MyKeystore.p12; echo 'SecureWeb is up.'; echo $SSL_CHAIN_FILE;"]
+    command: [ -c, "export SERVER_NAME=secureweb; export SERVER_ADMIN=webmaster@mydomain.com; export PORT_REDIRECT=8080; export SSL_CERT_FILE=/test/oe_epoetry/tests/fixtures/certs/secureweb/MyKeystore.crt; export SSL_PRIVKEY_FILE=/test/oe_epoetry/tests/fixtures/certs/secureweb/MyKeystore.key; export SSL_CHAIN_FILE=/test/oe_epoetry/tests/fixtures/certs/secureweb/MyKeystore.p12; echo 'SecureWeb is up.'; echo $SSL_CHAIN_FILE;"]
 
   authentication:
     group: conf
     image: registry.fpfis.tech.ec.europa.eu/ecas-mock-server:4.6.0
     detach: true
     entrypoint: [ /bin/bash ]
-    command: [ -c, "cp /tests/fixtures/ecas-mockup-config/*.xml  /data/ecas-mock-server-shared; echo 'eCAS Mockup Server shared configuration is done.'; /u01/oracle/user_projects/domains/base_domain/startWebLogic.sh"]
+    command: [ -c, "cp /test/oe_epoetry/tests/fixtures/ecas-mockup-config/*.xml  /data/ecas-mock-server-shared; echo 'eCAS Mockup Server shared configuration is done.'; /u01/oracle/user_projects/domains/base_domain/startWebLogic.sh"]
 
   composer-install:
     group: prepare
