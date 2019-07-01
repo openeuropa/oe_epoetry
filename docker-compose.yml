@@ -4,7 +4,7 @@ services:
   secureweb:
     # For local access, run this command in the terminal
     # echo "127.0.1.1 secureweb" >> /etc/hosts
-    image: aheimsbakk/https-proxy:4
+    image: aheimsbakk/https-proxy:6.1
     ports:
       - 80:80
       - 443:443

@@ -4,7 +4,7 @@ workspace:
 
 services:
   secureweb:
-    image: aheimsbakk/https-proxy:4
+    image: aheimsbakk/https-proxy:6.1
     environment:
       - SERVER_NAME=secureweb
       - SERVER_ADMIN=webmaster@mydomain.com
@@ -78,7 +78,7 @@ pipeline:
     group: test
     image: fpfis/httpd-php-ci:7.1
     commands:
-      - ./vendor/bin/behat --strict -f pretty
+      - ./vendor/bin/behat --strict
 
   debug:
     image: fpfis/httpd-php-ci:7.1
