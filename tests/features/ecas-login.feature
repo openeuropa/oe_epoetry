@@ -9,6 +9,7 @@ Feature: Login through OE Authentication
   Scenario: Login/Logout with eCAS mockup server of internal users
     Given the site is configured to make users active on creation
     When I am on the homepage
+    And print last response
     And I click "Log in"
     And I click "European Commission"
     # Redirected to the mock server.
