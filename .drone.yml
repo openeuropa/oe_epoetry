@@ -3,6 +3,7 @@ workspace:
   path: oe_epoetry
 
 services:
+  http:
     image: fpfis/httpd-php-ci:7.1
     environment:
       - DOCUMENT_ROOT=/test/oe_epoetry
@@ -14,6 +15,11 @@ services:
     image: registry.fpfis.tech.ec.europa.eu/epoetry-mock:0.0.1
   orcldb:
     image: registry.fpfis.tech.ec.europa.eu/oracle/database-enterprise:12.2.0.1
+  selenium:
+    image: selenium/standalone-chrome:3.11
+    environment:
+      - DISPLAY=:99
+      - SE_OPTS=-debug
 
 pipeline:
   secureweb:

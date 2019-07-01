@@ -28,5 +28,5 @@ services:
           - '@oe_epoetry.middleware_cas_proxy_ticket'
 
 parameters:
-  oe_epoetry.service.url: 'http://epoetry:7001/epoetry/webservices/dgtService'
+  oe_epoetry.service.url: 'https://epoetry:7002/epoetry/webservices/dgtService'
   oe_epoetry.service.options: []

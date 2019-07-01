@@ -58,15 +58,16 @@ class TestController extends ControllerBase {
    * Run test.
    */
   public function test() {
-
     $clientFactory = $this->epoetry;
     $client = $clientFactory->getRequestClient();
 
     // Generate request.
     $generalInfo = new RequestGeneralInfoIn();
     $generalInfo->setTitle('Test');
+
     $linguisticRequestIn = new LinguisticRequestIn();
     $linguisticRequestIn->setGeneralInfo($generalInfo);
+
     $createRequests = new CreateRequests();
     $createRequests->setLinguisticRequest([$linguisticRequestIn]);
 
@@ -76,6 +77,7 @@ class TestController extends ControllerBase {
     $build = [
       '#markup' => var_export($request['headers'], TRUE),
     ];
+
     return $build;
   }
 

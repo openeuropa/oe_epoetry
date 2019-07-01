@@ -1,6 +1,6 @@
 drupal:
   root: "build"
-  base_url: "http://secureweb/build"
+  base_url: "https://secureweb/build"
   site:
     name: "OpenEuropa"
     profil: "standard"
@@ -11,7 +11,10 @@ drupal:
     user: "root"
     password: ""
   post_install:
+    # Prepare the instance.
+    - "./vendor/bin/drush en toolbar -y"
     - "./vendor/bin/drush en config_devel -y"
+    # Enable the modules.
     - "./vendor/bin/drush en oe_epoetry -y"
     - "./vendor/bin/drush cr"
   settings:
@@ -19,6 +22,10 @@ drupal:
       file_scan_ignore_directories:
         - "vendor"
         - "${drupal.root}"
+
+selenium:
+  host: "http://selenium"
+  port: "4444"
 
 commands:
   drupal:site-setup:
@@ -30,11 +37,8 @@ commands:
     - task: "append"
       file: "build/sites/default/settings.override.php"
       text: |
-        $config['cas.settings']['server']['protocol'] = 'https';
         $config['cas.settings']['server']['hostname'] = 'authentication';
         $config['cas.settings']['server']['port'] = '7002';
-        $config['cas.settings']['server']['path'] = '/cas';
-        $config['cas.settings']['server']['version'] = '3.0';
         $config['cas.settings']['proxy']['initialize'] = TRUE;
         // SSL Configuration to not verify CAS server. DO NOT USE IN PRODUCTION!
         $config['cas.settings']['server']['verify'] = '2';

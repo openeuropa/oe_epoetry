@@ -4,18 +4,24 @@ default:
       paths:
         - %paths.base%/tests/features
       contexts:
-        - Drupal\DrupalExtension\Context\MinkContext
+        - Drupal\DrupalExtension\Context\ConfigContext
         - Drupal\DrupalExtension\Context\DrupalContext
+        - Drupal\DrupalExtension\Context\MinkContext
+        - Drupal\Tests\oe_epoetry\Behat\AuthenticationContext
+        - Drupal\Tests\oe_epoetry\Behat\CleanupContext
   extensions:
     Drupal\MinkExtension:
       goutte: ~
       selenium2: ~
       ajax_timeout: 10
-      javascript_session: selenium2
+      browser_name: 'chrome'
+      javascript_session: 'selenium2'
       base_url: "${drupal.base_url}"
+      selenium2:
+        wd_host: '${selenium.host}:${selenium.port}/wd/hub'
     Drupal\DrupalExtension:
       api_driver: "drupal"
       drupal:
-        drupal_root: "build"
+        drupal_root: "${drupal.root}"
   formatters:
     progress: ~
