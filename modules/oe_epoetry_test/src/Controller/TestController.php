@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace Drupal\oe_epoetry\Controller;
+namespace Drupal\oe_epoetry_test\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Http\Adapter\Guzzle6\Client;

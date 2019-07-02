@@ -8,6 +8,7 @@ default:
         - Drupal\DrupalExtension\Context\DrupalContext
         - Drupal\DrupalExtension\Context\MinkContext
         - Drupal\Tests\oe_epoetry\Behat\AuthenticationContext
+        - Drupal\Tests\oe_epoetry\Behat\DrupalContext
         - Drupal\Tests\oe_epoetry\Behat\CleanupContext
   extensions:
     Drupal\MinkExtension:
