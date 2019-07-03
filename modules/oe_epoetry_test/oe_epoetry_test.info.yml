@@ -1,0 +1,6 @@
+name: 'OpenEuropa ePoetry test'
+type: module
+description: 'OpenEuropa ePoetry test module.'
+package: OpenEuropa
+hidden: true
+core: 8.x

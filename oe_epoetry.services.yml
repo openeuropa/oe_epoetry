@@ -1,0 +1,32 @@
+services:
+  oe_epoetry.http_client_adapter:
+    class: \Http\Adapter\Guzzle6\Client
+    arguments: ['@http_client']
+  oe_proxy_ticket_helper:
+    class: \Drupal\oe_epoetry\Helper\ProxyTicket
+    arguments:
+      - '@cas.proxy_helper'
+      - '@http_client'
+      - '@cas.helper'
+      - '@session'
+      - '@config.factory'
+      - '%oe_epoetry.service.url%'
+  oe_epoetry.middleware_cas_proxy_ticket:
+    class: \OpenEuropa\EPoetry\Middleware\CasProxyTicketMiddleware
+    arguments:
+      - '@oe_proxy_ticket_helper'
+  oe_epoetry.epoetry_client:
+    class: \OpenEuropa\EPoetry\ClientFactory
+    arguments: [
+      '%oe_epoetry.service.url%',
+      '@oe_epoetry.http_client_adapter',
+      '%oe_epoetry.service.options%'
+    ]
+    calls:
+      - method: 'addMiddleware'
+        arguments:
+          - '@oe_epoetry.middleware_cas_proxy_ticket'
+
+parameters:
+  oe_epoetry.service.url: 'https://epoetry:7002/epoetry/webservices/dgtService'
+  oe_epoetry.service.options: []

@@ -9,39 +9,42 @@
         "php": "^7.1",
         "drupal/core": "^8.7",
         "drupal/tmgmt": "^1.8",
-        "openeuropa/epoetry-client": "dev-master"
+        "openeuropa/epoetry-client": "dev-master",
+        "openeuropa/oe_authentication": "^1.0.0-beta1",
+        "php-http/guzzle6-adapter": "^2.0",
+        "php-http/client-common": "^2.0",
+        "php-http/discovery": "^1.6"
     },
     "require-dev": {
         "composer/installers": "~1.5",
-        "consolidation/robo": "~1.4",
-        "consolidation/annotated-command": "^2.8.2",
+        "cweagans/composer-patches": "~1.6.5",
         "drupal-composer/drupal-scaffold": "~2.2",
         "drupal/config_devel": "~1.2",
         "drupal/console": "~1.0",
         "drupal/drupal-extension": "~4.0",
         "drush/drush": "~9.0@stable",
         "nikic/php-parser": "~3.0",
-        "openeuropa/code-review": "~1.0.0-beta2",
+        "openeuropa/behat-transformation-context" : "~0.1",
+        "openeuropa/code-review": "~1.0.0-beta3",
         "openeuropa/drupal-core-require-dev": "^8.7",
-        "openeuropa/oe_authentication": "^1.0@beta",
-        "openeuropa/task-runner": "~1.0.0-beta5",
-        "phpunit/phpunit": "~6.0"
+        "openeuropa/task-runner": "~1.0.0-beta6",
+        "phpunit/phpunit": "~6.0",
+        "php-http/mock-client": "~1.0"
     },
-    "_readme": [
-        "We explicitly require consolidation/robo to allow lower 'composer update --prefer-lowest' to complete successfully.",
-        "We explicitly require consolidation/annotated-command to allow lower 'composer update --prefer-lowest' to complete successfully."
-    ],
     "scripts": {
-        "drupal-scaffold": "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
         "post-install-cmd": "./vendor/bin/run drupal:site-setup",
         "post-update-cmd": "./vendor/bin/run drupal:site-setup"
     },
-    "repositories": {
-        "drupal": {
+    "repositories": [
+        {
             "type": "composer",
             "url": "https://packages.drupal.org/8"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/openeuropa/epoetry-client"
         }
-    },
+    ],
     "autoload": {
         "psr-4": {
             "Drupal\\oe_epoetry\\": "./src/"

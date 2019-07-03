@@ -3,7 +3,16 @@ workspace:
   path: oe_epoetry
 
 services:
-  web:
+  secureweb:
+    image: aheimsbakk/https-proxy:6.1
+    environment:
+      - SERVER_NAME=secureweb
+      - SERVER_ADMIN=webmaster@mydomain.com
+      - PORT_REDIRECT=8080
+      - SSL_CERT_FILE=/test/oe_epoetry/tests/fixtures/certs/secureweb/MyKeystore.crt
+      - SSL_PRIVKEY_FILE=/test/oe_epoetry/tests/fixtures/certs/secureweb/MyKeystore.key
+      - SSL_CHAIN_FILE=/test/oe_epoetry/tests/fixtures/certs/secureweb/MyKeystore.p12
+  http:
     image: fpfis/httpd-php-ci:7.1
     environment:
       - DOCUMENT_ROOT=/test/oe_epoetry
@@ -11,8 +20,24 @@ services:
     image: percona/percona-server:5.6
     environment:
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+  epoetry:
+    image: registry.fpfis.tech.ec.europa.eu/epoetry-mock:0.0.1
+  orcldb:
+    image: registry.fpfis.tech.ec.europa.eu/oracle/database-enterprise:12.2.0.1
+  selenium:
+    image: selenium/standalone-chrome:3.11
+    environment:
+      - DISPLAY=:99
+      - SE_OPTS=-debug
 
 pipeline:
+  authentication:
+    group: conf
+    image: registry.fpfis.tech.ec.europa.eu/ecas-mock-server:4.6.0
+    detach: true
+    entrypoint: [ /bin/bash ]
+    command: [ -c, "cp /test/oe_epoetry/tests/fixtures/ecas-mockup-config/*.xml  /data/ecas-mock-server-shared; echo 'eCAS Mockup Server shared configuration is done.'; /u01/oracle/user_projects/domains/base_domain/startWebLogic.sh"]
+
   composer-install:
     group: prepare
     image: fpfis/httpd-php-ci:7.1
@@ -27,8 +52,6 @@ pipeline:
     volumes:
       - /cache:/cache
     commands:
-      # @todo remove "composer install" step once the following issue is fixed.
-      # @link https://webgate.ec.europa.eu/CITnet/jira/browse/OPENEUROPA-1234
       - composer update --prefer-lowest --prefer-stable --ansi --no-suggest --no-progress
     when:
       matrix:
@@ -39,23 +62,30 @@ pipeline:
     commands:
       - ./vendor/bin/run drupal:site-install
 
-  grumphp:
+  test-grumphp:
     group: test
     image: fpfis/httpd-php-ci:7.1
     commands:
       - ./vendor/bin/grumphp run
 
-  phpunit:
+  test-phpunit:
     group: test
     image: fpfis/httpd-php-ci:7.1
     commands:
       - ./vendor/bin/phpunit
 
-  behat:
+  test-behat:
     group: test
     image: fpfis/httpd-php-ci:7.1
     commands:
       - ./vendor/bin/behat --strict
+
+  debug:
+    image: fpfis/httpd-php-ci:7.1
+    commands:
+      - ./vendor/bin/drush ws --count 500
+    when:
+      status: failure
 
 matrix:
   COMPOSER_BOUNDARY:

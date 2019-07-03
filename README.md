@@ -48,6 +48,11 @@ changing relevant values, like your database credentials.
 
 Your test site will be available at `./build`.
 
+The certificate used on `secureweb` container is profited by: 
+```
+https://authentication:7002/cas/selfCertWeb/
+```
+
 ### Using Docker Compose
 
 Alternatively, you can build a development site using [Docker](https://www.docker.com/get-docker) and 
