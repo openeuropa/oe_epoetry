@@ -6,10 +6,6 @@ services:
     class: \Drupal\oe_epoetry\Helper\ProxyTicket
     arguments:
       - '@cas.proxy_helper'
-      - '@http_client'
-      - '@cas.helper'
-      - '@session'
-      - '@config.factory'
       - '%oe_epoetry.service.url%'
   oe_epoetry.middleware_cas_proxy_ticket:
     class: \OpenEuropa\EPoetry\Middleware\CasProxyTicketMiddleware
